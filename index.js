@@ -1,5 +1,13 @@
+require("dotenv").config()
 const express = require("express")
+const Note = require("./models/note")
+
 const app = express()
+
+
+
+
+
 
 const requestLogger = (req, res, next) => {
     console.log("Method:", req.method)
@@ -20,7 +28,9 @@ app.get("/", (req, res) => {
 })
 
 app.get("/api/notes", (req, res) => {
-    res.json(notes)
+    Note.find({}).then(notes => {
+        res.json(notes)
+    })
 })
 
 app.get("/api/notes/:id", (req, res) => {
@@ -47,7 +57,7 @@ const generateId = () => {
 app.post("/api/notes", (req, res) => {
     const body = req.body
     if (!body.content) {
-        return res.status(400).json({error: "content missing"})
+        return res.status(400).json({ error: "content missing" })
     }
     const note = {
         content: body.content,
@@ -59,12 +69,12 @@ app.post("/api/notes", (req, res) => {
 })
 
 const unknownEndpoint = (req, res) => {
-    res.status(404).send({error: "unknown endpoint"})
+    res.status(404).send({ error: "unknown endpoint" })
 }
 
 app.use(unknownEndpoint)
 
-const PORT = 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`server listening on port ${PORT}`)
 })
