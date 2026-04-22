@@ -10,7 +10,7 @@ GET {{baseUrl}} HTTP/1.1
 
 ### get note
 
-GET {{baseUrl}}/1 HTTP/1.1
+GET {{baseUrl}}/69e75ff8958f3e80f190bcbb HTTP/1.1
 
 
 ### delete note
